@@ -3,6 +3,7 @@ package com.example.evenspot_android.ui.main
 import com.example.evenspot_android.R
 import com.example.evenspot_android.dependencies.modules.presentation.main.MainComponent
 import com.example.evenspot_android.dependencies.modules.presentation.main.MainModule
+import com.example.evenspot_android.dependencies.utils.toast
 import com.example.evenspot_android.ui.base.BaseActivity
 import com.example.presentation.presentation.main.MainPresenter
 import com.example.presentation.presentation.main.MainView
@@ -35,7 +36,9 @@ class MainActivity : BaseActivity(), MainView {
 
     override fun setTextWelcome() {
 
-        tvInit.text = "Buenos días"
+        tvInit.text = getString(R.string.my_name)
+
+        tvInit.setOnClickListener { toast(getString(R.string.good_morning)) }
     }
 
 
