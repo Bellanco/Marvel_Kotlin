@@ -14,10 +14,10 @@ import dagger.Component
 @ActivityScope
 interface ActivityComponent {
 
-    abstract fun providesNavigator(): Navigator
+    fun providesNavigator(): Navigator
 
-    abstract fun mainComponent(): MainComponent.Builder
+    fun mainComponent(): MainComponent.Builder
 
-    abstract fun mainFragmentComponent(): MainFragmentComponent.Builder
+    fun mainFragmentComponent(): MainFragmentComponent.Builder
 
 }

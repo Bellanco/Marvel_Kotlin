@@ -1,18 +1,17 @@
-package com.example.evenspot_android.dependencies.utils
+package com.example.evenspot_android.ui.utils
 
 import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
-import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 
 fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
-fun ImageView.fromUrl(url: String) {
+fun ImageView.loadImageFromUrl(url: String) {
     if (url.isNotEmpty())
-        Glide.with(this).load(url).into(this)
-
+        Picasso.get().load(url).into(this)
 }
 
 fun ProgressBar.show() {

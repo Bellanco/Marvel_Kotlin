@@ -25,6 +25,7 @@ abstract class BaseFragment : Fragment(), BaseView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         unbinder = ButterKnife.bind(this, view)
+        prepareInjection()
     }
 
     override fun onDestroyView() {
