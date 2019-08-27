@@ -1,0 +1,21 @@
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+def libraries = parent.ext.libraries
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'javax.inject:javax.inject:1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation libraries.retrofit
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'javax.inject:javax.inject:1'
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
+

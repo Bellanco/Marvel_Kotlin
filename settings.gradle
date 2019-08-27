@@ -1,0 +1,2 @@
+include ':app', ':data', ':data', ':domain', ':presentation'
+rootProject.name='EvenSpot_Android'
