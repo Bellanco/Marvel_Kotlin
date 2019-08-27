@@ -48,4 +48,7 @@ abstract class BaseActivity : AppCompatActivity(), BaseView  {
             .activityModule(ActivityModule(this))
             .build()
     }
+
+    protected abstract fun initComponent()
+
 }

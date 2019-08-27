@@ -1,9 +1,17 @@
 package com.example.evenspot_android.navigation
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.example.evenspot_android.R
+import com.example.evenspot_android.ui.activity.MainActivity
+import com.example.evenspot_android.ui.main.MainFragment
 import com.example.presentation.navigation.Navigator
 
 class NavigatorImpl : Navigator {
+
+    val CONTAINER_ID = R.id.container
 
     private var activity: AppCompatActivity
 
@@ -11,12 +19,34 @@ class NavigatorImpl : Navigator {
         this.activity = activity
     }
 
-
     override fun goBack() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(activity, MainActivity::class.java)
+        activity.startActivity(intent)
     }
 
     override fun onBackPressed() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        activity.getSupportFragmentManager().popBackStackImmediate()
     }
+
+    override fun goToMainFragment() {
+        activity.supportFragmentManager.popBackStackImmediate(
+            null,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+        replaceFragment(MainFragment().newInstance(), false)
+    }
+
+    private fun replaceFragment(fragment: Fragment, addToBack: Boolean) {
+        val fragmentManager = activity.supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+
+        if (addToBack) {
+            fragmentTransaction.addToBackStack(null)
+        }
+
+        fragmentTransaction.replace(CONTAINER_ID, fragment)
+        fragmentTransaction.commit()
+    }
+
 }

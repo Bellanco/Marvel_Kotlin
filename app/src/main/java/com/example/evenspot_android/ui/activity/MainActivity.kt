@@ -1,13 +1,11 @@
-package com.example.evenspot_android.ui.main
+package com.example.evenspot_android.ui.activity
 
 import com.example.evenspot_android.R
-import com.example.evenspot_android.dependencies.modules.presentation.main.MainComponent
-import com.example.evenspot_android.dependencies.modules.presentation.main.MainModule
-import com.example.evenspot_android.dependencies.utils.toast
+import com.example.evenspot_android.dependencies.modules.presentation.activity.MainComponent
+import com.example.evenspot_android.dependencies.modules.presentation.activity.MainModule
 import com.example.evenspot_android.ui.base.BaseActivity
-import com.example.presentation.presentation.main.MainPresenter
-import com.example.presentation.presentation.main.MainView
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.presentation.presentation.activity.MainPresenter
+import com.example.presentation.presentation.activity.MainView
 import javax.inject.Inject
 
 class MainActivity : BaseActivity(), MainView {
@@ -33,13 +31,5 @@ class MainActivity : BaseActivity(), MainView {
 
         presenter.initialize()
     }
-
-    override fun setTextWelcome() {
-
-        tvInit.text = getString(R.string.my_name)
-
-        tvInit.setOnClickListener { toast(getString(R.string.good_morning)) }
-    }
-
 
 }

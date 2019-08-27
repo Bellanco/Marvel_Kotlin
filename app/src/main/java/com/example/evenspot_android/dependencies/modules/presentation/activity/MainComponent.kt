@@ -1,8 +1,8 @@
-package com.example.evenspot_android.dependencies.modules.presentation.main
+package com.example.evenspot_android.dependencies.modules.presentation.activity
 
 import com.example.evenspot_android.dependencies.modules.base.scopes.PresentationScope
-import com.example.evenspot_android.ui.main.MainActivity
-import com.example.presentation.presentation.main.MainPresenter
+import com.example.evenspot_android.ui.activity.MainActivity
+import com.example.presentation.presentation.activity.MainPresenter
 import dagger.Subcomponent
 
 @Subcomponent(modules = [MainModule::class])

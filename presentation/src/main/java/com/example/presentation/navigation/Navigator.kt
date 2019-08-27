@@ -5,4 +5,6 @@ interface Navigator {
     fun goBack()
 
     fun onBackPressed()
+
+    fun goToMainFragment()
 }
