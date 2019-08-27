@@ -51,22 +51,18 @@ dependencies {
 
     implementation libs.cardView
 
-
-    implementation libs.daggerCompile
-
-    kapt "com.google.dagger:dagger-compiler:2.15"
-
+    //DAGGER
+    implementation libs.dagger
+    kapt libs.daggerCompile
+    annotationProcessor libs.daggerCompile
     compileOnly libs.daggerProvided
 
     //BUTTERKNIFE
     implementation libs.butterknife
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    annotationProcessor libs.butterknifeCompiler
     implementation libs.butterknifeCompiler
 
     implementation 'com.squareup.picasso:picasso:2.71828'
-
-
-    annotationProcessor libs.daggerApt
 
     implementation project(":presentation")
     implementation project(":data")
