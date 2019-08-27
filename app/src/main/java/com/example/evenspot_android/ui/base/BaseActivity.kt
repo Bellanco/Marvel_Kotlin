@@ -30,6 +30,9 @@ abstract class BaseActivity : AppCompatActivity(), BaseView  {
 
     }
 
+    abstract fun getLayoutResId(): Int
+
+
     fun getAppComponent(): ApplicationComponent {
         return (application as BaseApplication).getAppComponent()
     }
