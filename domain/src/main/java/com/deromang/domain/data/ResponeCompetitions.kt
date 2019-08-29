@@ -2,6 +2,8 @@ package com.deromang.domain.data
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
 
 data class Response(
@@ -35,3 +37,4 @@ data class CurrentSeason(
     @SerializedName("endDate") val endDate: String,
     @SerializedName("currentMatchday") val currentMatchday: String
 )
+

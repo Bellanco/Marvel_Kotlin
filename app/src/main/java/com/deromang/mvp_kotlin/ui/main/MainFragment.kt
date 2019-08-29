@@ -3,7 +3,8 @@ package com.deromang.mvp_kotlin.ui.main
 
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.deromang.domain.modules.api.APIClient
+import androidx.recyclerview.widget.RecyclerView
+import com.deromang.domain.data.Response
 import com.deromang.mvp_kotlin.R
 import com.deromang.mvp_kotlin.dependencies.modules.presentation.main.MainFragmentComponent
 import com.deromang.mvp_kotlin.dependencies.modules.presentation.main.MainFragmentModule
@@ -53,14 +54,19 @@ class MainFragment : BaseFragment(), MainFragmentView {
 
         presenter.showLeagues()
 
-        val url = "https://media.moddb.com/images/members/1/414/413573/profile/thewitcheranniversary_610.jpg"
+        val url =
+            "https://media.moddb.com/images/members/1/414/413573/profile/thewitcheranniversary_610.jpg"
         ivBackground.loadImageFromUrl(url)
 
         val items = addItems()
 
+    }
+
+    override fun onShowLeaguesReady(list: Response?) {
+
         rvItems.layoutManager = GridLayoutManager(context, 2)
 
-        rvItems.adapter = MainAdapter(items, context)
+        rvItems.adapter = MainAdapter(list?.competitions, context)
     }
 
 }

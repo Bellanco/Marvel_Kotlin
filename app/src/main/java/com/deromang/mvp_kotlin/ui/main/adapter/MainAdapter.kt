@@ -5,15 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.deromang.domain.data.Competitions
 import com.deromang.mvp_kotlin.R
 import kotlinx.android.synthetic.main.main_list_item.view.*
 
-class MainAdapter(private val items: ArrayList<String>, private val context: Context?) :
+class MainAdapter(private val items: List<Competitions>?, private val context: Context?) :
     RecyclerView.Adapter<ViewHolder>() {
 
     // Gets the number of items in the list
     override fun getItemCount(): Int {
-        return items.size
+        return items?.size ?: 0
     }
 
     // Inflates the item views
@@ -29,7 +30,7 @@ class MainAdapter(private val items: ArrayList<String>, private val context: Con
 
     // Binds each item in the ArrayList to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.tvItem.text = items.get(position)
+        holder.tvItem.text = items?.get(position)?.name ?: ""
     }
 }
 

@@ -7,24 +7,30 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class APIClient {
 
-    private val BASE_URL = "http://api.football-data.org/v2/"
+    companion object {
 
-    private fun getClient(): Retrofit {
+        private val BASE_URL = "http://api.football-data.org/v2/"
 
-        val interceptor = HttpLoggingInterceptor()
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
-        val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+        private fun getClient(): Retrofit {
 
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(client)
-            .build()
+            val interceptor = HttpLoggingInterceptor()
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
+            return Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+
+        }
+
+
+        fun getAPIService(): APIService {
+            return getClient().create(APIService::class.java)
+        }
 
     }
 
-    fun getAPIService(): APIService {
-        return getClient().create(APIService::class.java)
-    }
 
 }

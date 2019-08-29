@@ -8,6 +8,6 @@ import retrofit2.http.GET
 interface APIService {
 
     @GET("competitions")
-    fun showCompetitions(): Call<BaseResponseModel<Response>>
+    fun showCompetitions(): Call<Response>
 
 }

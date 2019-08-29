@@ -1,6 +1,5 @@
 package com.deromang.presentation.presentation.main
 
-import com.deromang.domain.data.BaseResponseModel
 import com.deromang.domain.modules.api.APIClient
 import com.deromang.domain.modules.api.APIService
 import com.deromang.presentation.navigation.Navigator
@@ -22,25 +21,26 @@ class MainFragmentPresenterImpl @Inject constructor(private var navigator: Navig
     }
 
     override fun getAPIService() {
-        //TODO: Comprobar getApiService: compain object?
-//        mApiService = APIClient.getApi()
+        //TODO: Comprobar getApiService: data object?
+        mApiService = APIClient.getAPIService()
     }
 
     override fun showLeagues() {
         mApiService?.showCompetitions()
-            ?.enqueue(object : Callback<BaseResponseModel<com.deromang.domain.data.Response>?> {
+            ?.enqueue(object : Callback<com.deromang.domain.data.Response?> {
                 override fun onFailure(
-                    call: Call<BaseResponseModel<com.deromang.domain.data.Response>?>,
+                    call: Call<com.deromang.domain.data.Response?>,
                     t: Throwable
                 ) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
 
                 override fun onResponse(
-                    call: Call<BaseResponseModel<com.deromang.domain.data.Response>?>,
-                    response: Response<BaseResponseModel<com.deromang.domain.data.Response>?>
+                    call: Call<com.deromang.domain.data.Response?>,
+                    response: Response<com.deromang.domain.data.Response?>
                 ) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    var list = response.body()
+                    mView.onShowLeaguesReady(list)
                 }
             })
     }
