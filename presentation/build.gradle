@@ -1,11 +1,14 @@
 apply plugin: 'java'
 apply plugin: 'kotlin'
 
+def libs = parent.ext.libraries
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'javax.inject:javax.inject:1'
 
+    implementation libs.retrofit
 
     implementation project(":domain")
 }
