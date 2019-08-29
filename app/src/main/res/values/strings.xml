@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EvenSpot_Android</string>
+    <string name="app_name">MVP Kotlin</string>
     <string name="good_morning">Buenos días</string>
     <string name="my_name">Diego</string>
 

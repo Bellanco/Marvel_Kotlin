@@ -1,2 +1,2 @@
 include ':app', ':data', ':data', ':domain', ':presentation'
-rootProject.name='EvenSpot_Android'
+rootProject.name='MVP_Kotlin'
