@@ -21,7 +21,6 @@ class MainFragmentPresenterImpl @Inject constructor(private var navigator: Navig
     }
 
     override fun getAPIService() {
-        //TODO: Comprobar getApiService: data object?
         mApiService = APIClient.getAPIService()
     }
 
@@ -32,21 +31,17 @@ class MainFragmentPresenterImpl @Inject constructor(private var navigator: Navig
                     call: Call<com.deromang.domain.data.Response?>,
                     t: Throwable
                 ) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    mView.showError()
                 }
 
                 override fun onResponse(
                     call: Call<com.deromang.domain.data.Response?>,
                     response: Response<com.deromang.domain.data.Response?>
                 ) {
-                    var list = response.body()
+                    val list = response.body()
                     mView.onShowLeaguesReady(list)
                 }
             })
-    }
-
-    fun initialize() {
-        navigator.goToMainFragment()
     }
 
 }

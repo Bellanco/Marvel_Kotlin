@@ -48,8 +48,8 @@ ext {
             retrofit           : "com.squareup.retrofit2:retrofit:${versions.vRetrofit}",
 
             //Gradle: Injection Dependencies
-            daggerCompile          : "com.google.dagger:dagger-compiler:${versions.vDagger}",
-            dagger      : "com.google.dagger:dagger:${versions.vDagger}",
+            daggerCompile      : "com.google.dagger:dagger-compiler:${versions.vDagger}",
+            dagger             : "com.google.dagger:dagger:${versions.vDagger}",
             daggerProvided     : 'org.glassfish:javax.annotation:10.0-b28',
     ]
 

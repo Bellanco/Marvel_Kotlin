@@ -5,4 +5,5 @@ import com.deromang.presentation.presentation.base.BaseView
 
 interface MainFragmentView : BaseView {
     fun onShowLeaguesReady(list: Response?)
+    fun showError()
 }

@@ -12,6 +12,7 @@ import com.deromang.mvp_kotlin.ui.base.BaseFragment
 import com.deromang.mvp_kotlin.ui.main.adapter.MainAdapter
 import com.deromang.mvp_kotlin.ui.utils.addItems
 import com.deromang.mvp_kotlin.ui.utils.loadImageFromUrl
+import com.deromang.mvp_kotlin.ui.utils.toast
 import com.deromang.presentation.presentation.main.MainFragmentPresenter
 import com.deromang.presentation.presentation.main.MainFragmentView
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -68,5 +69,10 @@ class MainFragment : BaseFragment(), MainFragmentView {
 
         rvItems.adapter = MainAdapter(list?.competitions, context)
     }
+
+    override fun showError() {
+        context?.toast(getString(R.string.error))
+    }
+
 
 }
