@@ -9,15 +9,9 @@ import com.deromang.mvp_kotlin.ui.activity.MainActivity
 import com.deromang.mvp_kotlin.ui.main.MainFragment
 import com.deromang.presentation.navigation.Navigator
 
-class NavigatorImpl : Navigator {
+class NavigatorImpl(private var activity: AppCompatActivity) : Navigator {
 
     val CONTAINER_ID = R.id.container
-
-    private var activity: AppCompatActivity
-
-    constructor(activity: AppCompatActivity) {
-        this.activity = activity
-    }
 
     override fun goBack() {
         val intent = Intent(activity, MainActivity::class.java)
@@ -33,7 +27,7 @@ class NavigatorImpl : Navigator {
             null,
             FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
-        replaceFragment(MainFragment().newInstance(), false)
+        replaceFragment(MainFragment.newInstance(), false)
     }
 
     private fun replaceFragment(fragment: Fragment, addToBack: Boolean) {

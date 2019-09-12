@@ -1,6 +1,7 @@
 package com.deromang.mvp_kotlin.ui.main
 
 
+import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,9 +29,17 @@ class MainFragment : BaseFragment(), MainFragmentView {
     @Inject
     lateinit var presenter: MainFragmentPresenter
 
-    fun newInstance(): Fragment {
-        val fragment = MainFragment()
-        return fragment
+    companion object {
+
+        private const val IS_ACCESS = "isAccess"
+
+        fun newInstance(): Fragment {
+            val fragment = MainFragment()
+            val args = Bundle()
+            args.putBoolean(IS_ACCESS, false)
+            fragment.arguments = args
+            return fragment
+        }
     }
 
     override fun getLayoutResId(): Int {
