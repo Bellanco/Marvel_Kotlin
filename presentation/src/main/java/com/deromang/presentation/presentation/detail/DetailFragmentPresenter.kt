@@ -1,9 +1,9 @@
-package com.deromang.presentation.presentation.main
+package com.deromang.presentation.presentation.detail
 
 import com.deromang.presentation.presentation.base.BasePresenter
 
-interface MainFragmentPresenter : BasePresenter<MainFragmentView> {
+interface DetailFragmentPresenter : BasePresenter<DetailFragmentView> {
     fun getAPIService()
-    fun showCharacters()
     fun showCharactersDetail(characterId: Int)
+    fun goToMainFragment()
 }

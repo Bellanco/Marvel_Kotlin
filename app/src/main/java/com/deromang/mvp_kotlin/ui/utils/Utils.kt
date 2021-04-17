@@ -11,7 +11,7 @@ fun Context.toast(message: String) = Toast.makeText(this, message, Toast.LENGTH_
 
 fun ImageView.loadImageFromUrl(url: String) {
     if (url.isNotEmpty())
-        Picasso.get().load(url).into(this)
+        Picasso.get().load(url).fit().into(this)
 }
 
 fun ProgressBar.show() {
@@ -22,16 +22,4 @@ fun ProgressBar.show() {
 fun ProgressBar.hide() {
     if (this.visibility == View.VISIBLE)
         this.visibility = View.GONE
-}
-
-fun addItems(): ArrayList<String> {
-
-    val items: ArrayList<String> = ArrayList()
-
-    items.add("GSW")
-    items.add("LAC")
-    items.add("LAL")
-    items.add("CLE")
-
-    return items
 }

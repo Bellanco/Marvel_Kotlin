@@ -1,4 +1,4 @@
-package com.deromang.mvp_kotlin.dependencies.modules.presentation.main
+package com.deromang.mvp_kotlin.dependencies.modules.presentation.detail
 
 import com.deromang.mvp_kotlin.dependencies.modules.base.scopes.PresentationScope
 import com.deromang.presentation.presentation.detail.DetailFragmentPresenter
@@ -9,11 +9,12 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class MainFragmentModule {
+class DetailFragmentModule {
 
     @Provides
     @PresentationScope
-    fun providesMainFragmentPresenter(mainFragmentPresenter: MainFragmentPresenterImpl): MainFragmentPresenter {
-        return mainFragmentPresenter
+    fun providesDetailFragmentPresenter(detailFragmentPresenter: DetailFragmentPresenterImpl): DetailFragmentPresenter {
+        return detailFragmentPresenter
     }
+
 }

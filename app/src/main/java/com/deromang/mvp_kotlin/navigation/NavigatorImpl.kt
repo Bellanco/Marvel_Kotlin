@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.deromang.mvp_kotlin.R
 import com.deromang.mvp_kotlin.ui.activity.MainActivity
+import com.deromang.mvp_kotlin.ui.detail.DetailFragment
 import com.deromang.mvp_kotlin.ui.main.MainFragment
 import com.deromang.presentation.navigation.Navigator
 
@@ -19,8 +20,9 @@ class NavigatorImpl(private var activity: AppCompatActivity) : Navigator {
     }
 
     override fun onBackPressed() {
-        activity.getSupportFragmentManager().popBackStackImmediate()
+        activity.supportFragmentManager.popBackStackImmediate()
     }
+
 
     override fun goToMainFragment() {
         activity.supportFragmentManager.popBackStackImmediate(
@@ -28,6 +30,14 @@ class NavigatorImpl(private var activity: AppCompatActivity) : Navigator {
             FragmentManager.POP_BACK_STACK_INCLUSIVE
         )
         replaceFragment(MainFragment.newInstance(), false)
+    }
+
+    override fun goToDetailFragment(characterId: Int) {
+        activity.supportFragmentManager.popBackStackImmediate(
+            null,
+            FragmentManager.POP_BACK_STACK_INCLUSIVE
+        )
+        replaceFragment(DetailFragment.newInstance(characterId), false)
     }
 
     private fun replaceFragment(fragment: Fragment, addToBack: Boolean) {

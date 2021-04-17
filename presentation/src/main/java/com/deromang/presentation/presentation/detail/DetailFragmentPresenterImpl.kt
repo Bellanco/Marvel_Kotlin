@@ -1,7 +1,8 @@
-package com.deromang.presentation.presentation.main
+package com.deromang.presentation.presentation.detail
 
 import com.deromang.domain.data.BaseResponseModel
-import com.deromang.domain.data.DataResponse
+import com.deromang.domain.data.Characters
+import com.deromang.domain.data.DetailCharacters
 import com.deromang.domain.modules.api.APIClient
 import com.deromang.domain.modules.api.APIService
 import com.deromang.presentation.navigation.Navigator
@@ -11,14 +12,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class MainFragmentPresenterImpl @Inject constructor(private var navigator: Navigator) :
-    MainFragmentPresenter, BasePresenterImpl<MainFragmentView>() {
+class DetailFragmentPresenterImpl @Inject constructor(private var navigator: Navigator) :
+    DetailFragmentPresenter, BasePresenterImpl<DetailFragmentView>() {
 
     private var mApiService: APIService? = null
 
-    lateinit var mView: MainFragmentView
+    lateinit var mView: DetailFragmentView
 
-    override fun setView(view: MainFragmentView) {
+    override fun setView(view: DetailFragmentView) {
         this.mView = view
     }
 
@@ -26,37 +27,28 @@ class MainFragmentPresenterImpl @Inject constructor(private var navigator: Navig
         mApiService = APIClient.getAPIService()
     }
 
-    override fun showCharacters() {
-        mApiService?.getCharacteres()
-            ?.enqueue(object : Callback<BaseResponseModel<DataResponse>> {
-                override fun onFailure(call: Call<BaseResponseModel<DataResponse>>, t: Throwable) {
+    override fun showCharactersDetail(characterId: Int) {
+        mApiService?.getCharactersDetail(characterId)
+            ?.enqueue(object : Callback<BaseResponseModel<DetailCharacters>> {
+                override fun onFailure(
+                    call: Call<BaseResponseModel<DetailCharacters>>,
+                    t: Throwable
+                ) {
                     mView.showError()
                 }
 
                 override fun onResponse(
-                    call: Call<BaseResponseModel<DataResponse>>,
-                    response: Response<BaseResponseModel<DataResponse>>
+                    call: Call<BaseResponseModel<DetailCharacters>>,
+                    response: Response<BaseResponseModel<DetailCharacters>>
                 ) {
                     val list = response.body()
-                    mView.onShowCharacters(list)
+                    mView.onShowCharactersDetail(list)
                 }
             })
     }
-    override fun showCharactersDetail(characterId: Int) {
-        mApiService?.getCharacteresDetail(characterId)
-            ?.enqueue(object : Callback<BaseResponseModel<DataResponse>> {
-                override fun onFailure(call: Call<BaseResponseModel<DataResponse>>, t: Throwable) {
-                    mView.showError()
-                }
 
-                override fun onResponse(
-                    call: Call<BaseResponseModel<DataResponse>>,
-                    response: Response<BaseResponseModel<DataResponse>>
-                ) {
-                    val list = response.body()
-                    mView.onShowCharacters(list)
-                }
-            })
+    override fun goToMainFragment() {
+        navigator.goToMainFragment()
     }
 
 }

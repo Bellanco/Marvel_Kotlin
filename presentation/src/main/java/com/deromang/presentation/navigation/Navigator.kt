@@ -7,4 +7,6 @@ interface Navigator {
     fun onBackPressed()
 
     fun goToMainFragment()
+
+    fun goToDetailFragment(characterId: Int)
 }

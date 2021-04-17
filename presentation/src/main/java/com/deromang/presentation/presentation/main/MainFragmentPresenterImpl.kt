@@ -1,5 +1,7 @@
 package com.deromang.presentation.presentation.main
 
+import com.deromang.domain.data.BaseResponseModel
+import com.deromang.domain.data.Characters
 import com.deromang.domain.modules.api.APIClient
 import com.deromang.domain.modules.api.APIService
 import com.deromang.presentation.navigation.Navigator
@@ -24,24 +26,24 @@ class MainFragmentPresenterImpl @Inject constructor(private var navigator: Navig
         mApiService = APIClient.getAPIService()
     }
 
-    override fun showLeagues() {
-        mApiService?.showCompetitions()
-            ?.enqueue(object : Callback<com.deromang.domain.data.Response?> {
-                override fun onFailure(
-                    call: Call<com.deromang.domain.data.Response?>,
-                    t: Throwable
-                ) {
+    override fun showCharacters() {
+        mApiService?.getCharacteres()
+            ?.enqueue(object : Callback<BaseResponseModel<Characters>> {
+                override fun onFailure(call: Call<BaseResponseModel<Characters>>, t: Throwable) {
                     mView.showError()
                 }
 
                 override fun onResponse(
-                    call: Call<com.deromang.domain.data.Response?>,
-                    response: Response<com.deromang.domain.data.Response?>
+                    call: Call<BaseResponseModel<Characters>>,
+                    response: Response<BaseResponseModel<Characters>>
                 ) {
                     val list = response.body()
-                    mView.onShowLeaguesReady(list)
+                    mView.onShowCharacters(list)
                 }
             })
     }
 
+    override fun goToDetail(characterId: Int) {
+        navigator.goToDetailFragment(characterId)
+    }
 }

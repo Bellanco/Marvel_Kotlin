@@ -1,10 +1,12 @@
-package com.deromang.presentation.presentation.main
+package com.deromang.presentation.presentation.detail
 
 import com.deromang.domain.data.BaseResponseModel
-import com.deromang.domain.data.DataResponse
+import com.deromang.domain.data.Characters
+import com.deromang.domain.data.DetailCharacters
 import com.deromang.presentation.presentation.base.BaseView
 
-interface MainFragmentView : BaseView {
-    fun onShowCharacters(list: BaseResponseModel<DataResponse>?)
+interface DetailFragmentView : BaseView {
+
+    fun onShowCharactersDetail(list: BaseResponseModel<DetailCharacters>?)
     fun showError()
 }

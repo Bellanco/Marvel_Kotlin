@@ -4,14 +4,13 @@ package com.deromang.mvp_kotlin.ui.main
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.deromang.domain.data.Response
+import com.deromang.domain.data.BaseResponseModel
+import com.deromang.domain.data.Characters
 import com.deromang.mvp_kotlin.R
 import com.deromang.mvp_kotlin.dependencies.modules.presentation.main.MainFragmentComponent
 import com.deromang.mvp_kotlin.dependencies.modules.presentation.main.MainFragmentModule
 import com.deromang.mvp_kotlin.ui.base.BaseFragment
 import com.deromang.mvp_kotlin.ui.main.adapter.MainAdapter
-import com.deromang.mvp_kotlin.ui.utils.addItems
 import com.deromang.mvp_kotlin.ui.utils.loadImageFromUrl
 import com.deromang.mvp_kotlin.ui.utils.toast
 import com.deromang.presentation.presentation.main.MainFragmentPresenter
@@ -62,21 +61,26 @@ class MainFragment : BaseFragment(), MainFragmentView {
 
         presenter.getAPIService()
 
-        presenter.showLeagues()
+        presenter.showCharacters()
 
         val url =
-            "https://media.moddb.com/images/members/1/414/413573/profile/thewitcheranniversary_610.jpg"
+            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Marvel_Logo.svg/375px-Marvel_Logo.svg.png"
         ivBackground.loadImageFromUrl(url)
-
-        val items = addItems()
-
     }
 
-    override fun onShowLeaguesReady(list: Response?) {
+    override fun onShowCharacters(list: BaseResponseModel<Characters>?) {
+        list?.data?.let { response ->
+            rvItems.layoutManager = GridLayoutManager(context, 2)
 
-        rvItems.layoutManager = GridLayoutManager(context, 2)
+            rvItems.adapter =
+                MainAdapter(response.results, context, object : MainAdapter.OnItemClickListener {
+                    override fun onItemClick(characterId: Int) {
+                        presenter.goToDetail(characterId)
+                    }
 
-        rvItems.adapter = MainAdapter(list?.competitions, context)
+                })
+        }
+
     }
 
     override fun showError() {

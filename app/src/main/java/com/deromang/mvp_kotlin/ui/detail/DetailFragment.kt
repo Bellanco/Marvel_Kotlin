@@ -1,39 +1,46 @@
-package com.deromang.mvp_kotlin.ui.main
+package com.deromang.mvp_kotlin.ui.detail
 
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.deromang.domain.data.BaseResponseModel
-import com.deromang.domain.data.DataResponse
+import com.deromang.domain.data.DetailCharacters
+import com.deromang.domain.data.Url
 import com.deromang.mvp_kotlin.R
-import com.deromang.mvp_kotlin.dependencies.modules.presentation.main.MainFragmentComponent
-import com.deromang.mvp_kotlin.dependencies.modules.presentation.main.MainFragmentModule
+import com.deromang.mvp_kotlin.dependencies.modules.presentation.detail.DetailFragmentComponent
+import com.deromang.mvp_kotlin.dependencies.modules.presentation.detail.DetailFragmentModule
 import com.deromang.mvp_kotlin.ui.base.BaseFragment
-import com.deromang.mvp_kotlin.ui.main.adapter.MainAdapter
+import com.deromang.mvp_kotlin.ui.detail.adapter.DetailAdapter
 import com.deromang.mvp_kotlin.ui.utils.loadImageFromUrl
 import com.deromang.mvp_kotlin.ui.utils.toast
-import com.deromang.presentation.presentation.main.MainFragmentPresenter
-import com.deromang.presentation.presentation.main.MainFragmentView
-import kotlinx.android.synthetic.main.fragment_main.*
+import com.deromang.presentation.presentation.detail.DetailFragmentPresenter
+import com.deromang.presentation.presentation.detail.DetailFragmentView
+import kotlinx.android.synthetic.main.fragment_detail.*
+import kotlinx.android.synthetic.main.fragment_detail.rvReferences
 import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
-class MainFragment : BaseFragment(), MainFragmentView {
+class DetailFragment : BaseFragment(), DetailFragmentView {
 
-    private var component: MainFragmentComponent? = null
+    private var component: DetailFragmentComponent? = null
+
+    private var characterId: Int? = null
 
     @Inject
-    lateinit var presenter: MainFragmentPresenter
+    lateinit var presenter: DetailFragmentPresenter
 
     companion object {
 
         private const val IS_ACCESS = "isAccess"
 
-        fun newInstance(): Fragment {
-            val fragment = MainFragment()
+        fun newInstance(characterId: Int): Fragment {
+            val fragment = DetailFragment()
+            fragment.characterId = characterId
             val args = Bundle()
             args.putBoolean(IS_ACCESS, false)
             fragment.arguments = args
@@ -42,13 +49,13 @@ class MainFragment : BaseFragment(), MainFragmentView {
     }
 
     override fun getLayoutResId(): Int {
-        return R.layout.fragment_main
+        return R.layout.fragment_detail
     }
 
     override fun prepareInjection() {
         component =
-            getActivityComponent()?.mainFragmentComponent()
-                ?.mainFragmentModule(MainFragmentModule())?.build()
+            getActivityComponent()?.detailFragmentComponent()
+                ?.detailFragmentModule(DetailFragmentModule())?.build()
 
         component?.inject(this)
 
@@ -61,25 +68,43 @@ class MainFragment : BaseFragment(), MainFragmentView {
 
         presenter.getAPIService()
 
-        presenter.showCharacters()
-
-        val url =
-            "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Marvel_Logo.svg/375px-Marvel_Logo.svg.png"
-        ivBackground.loadImageFromUrl(url)
-    }
-
-    override fun onShowCharacters(list: BaseResponseModel<DataResponse>?) {
-        list?.data?.let { response ->
-            rvItems.layoutManager = GridLayoutManager(context, 2)
-
-            rvItems.adapter = MainAdapter(response.results, context, object : MainAdapter.OnItemClickListener{
-                override fun onItemClick(characterId: Int) {
-
-                }
-
-            })
+        characterId?.let {
+            presenter.showCharactersDetail(it)
         }
 
+        fabBack.setOnClickListener { presenter.goToMainFragment() }
+    }
+
+
+    override fun onShowCharactersDetail(model: BaseResponseModel<DetailCharacters>?) {
+        model?.data?.let { response ->
+            if (response.results.isNotEmpty()) {
+                tvDetailName.text = response.results[0].name
+                val references = arrayListOf<Url>()
+                for (url in response.results[0].urls)
+                    references.add(url)
+                context?.let { context ->
+                    rvReferences.layoutManager = GridLayoutManager(context, 1)
+
+                    rvReferences.adapter =
+                        DetailAdapter(
+                            references,
+                            context,
+                            object : DetailAdapter.OnItemClickListener {
+                                override fun onItemClick(url: String) {
+                                    val browserIntent = Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(url)
+                                    )
+                                    startActivity(browserIntent)
+
+                                }
+                            })
+                }
+            }
+            val thumbnail = response.results[0].thumbnail
+            ivDetail.loadImageFromUrl("""${thumbnail.path}.${thumbnail.extension}""")
+        }
     }
 
     override fun showError() {
