@@ -4,6 +4,7 @@ package com.deromang.mvp_kotlin.ui.main
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.deromang.domain.data.BaseResponseModel
 import com.deromang.domain.data.Characters
 import com.deromang.mvp_kotlin.R
@@ -27,6 +28,10 @@ class MainFragment : BaseFragment(), MainFragmentView {
 
     @Inject
     lateinit var presenter: MainFragmentPresenter
+
+    var offset = 0
+    val limit = 20
+    var quantity = 0
 
     companion object {
 
@@ -61,24 +66,37 @@ class MainFragment : BaseFragment(), MainFragmentView {
 
         presenter.getAPIService()
 
-        presenter.showCharacters()
+        presenter.showCharacters(limit, offset)
+
+        setupAdapter()
 
         val url =
             "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Marvel_Logo.svg/375px-Marvel_Logo.svg.png"
         ivBackground.loadImageFromUrl(url)
     }
 
+    private fun setupAdapter() {
+        rvItems.layoutManager = GridLayoutManager(context, 2)
+
+        rvItems.adapter =
+            MainAdapter(requireContext(), object : MainAdapter.OnListener {
+                override fun onItemClick(characterId: Int) {
+                    presenter.goToDetail(characterId)
+                }
+
+                override fun onLoadCharacters() {
+                    if (offset + limit < quantity)
+                        presenter.showCharacters(limit, offset)
+                }
+
+            })
+    }
+
     override fun onShowCharacters(list: BaseResponseModel<Characters>?) {
         list?.data?.let { response ->
-            rvItems.layoutManager = GridLayoutManager(context, 2)
-
-            rvItems.adapter =
-                MainAdapter(response.results, context, object : MainAdapter.OnItemClickListener {
-                    override fun onItemClick(characterId: Int) {
-                        presenter.goToDetail(characterId)
-                    }
-
-                })
+            quantity = response.total.toInt()
+            offset += limit
+            (rvItems.adapter as MainAdapter).addAll(response.results)
         }
 
     }

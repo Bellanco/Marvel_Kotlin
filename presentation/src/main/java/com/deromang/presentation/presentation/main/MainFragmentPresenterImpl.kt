@@ -26,8 +26,8 @@ class MainFragmentPresenterImpl @Inject constructor(private var navigator: Navig
         mApiService = APIClient.getAPIService()
     }
 
-    override fun showCharacters() {
-        mApiService?.getCharacteres()
+    override fun showCharacters(limit: Int, offset: Int) {
+        mApiService?.getCharacteres(limit, offset)
             ?.enqueue(object : Callback<BaseResponseModel<Characters>> {
                 override fun onFailure(call: Call<BaseResponseModel<Characters>>, t: Throwable) {
                     mView.showError()

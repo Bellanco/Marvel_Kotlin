@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.deromang.domain.data.Result
 import com.deromang.mvp_kotlin.R
 import com.deromang.mvp_kotlin.ui.utils.loadImageFromUrl
+import com.deromang.mvp_kotlin.ui.utils.loadImageUrl
 import kotlinx.android.synthetic.main.main_list_item.view.*
 
-class MainAdapter(private val items: List<Result>, private val context: Context?, val listener: OnItemClickListener) :
+class MainAdapter(private val context: Context, private val listener: OnListener) :
     RecyclerView.Adapter<ViewHolder>() {
+
+    private val items: MutableList<Result> = mutableListOf()
 
     // Gets the number of items in the list
     override fun getItemCount(): Int {
@@ -33,17 +36,26 @@ class MainAdapter(private val items: List<Result>, private val context: Context?
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.tvItem.text = items[position].name
         val thumbnail = items[position].thumbnail
-        holder.ivItem.loadImageFromUrl("""${thumbnail.path}.${thumbnail.extension}""")
+        holder.ivItem.loadImageUrl(context,"""${thumbnail.path}.${thumbnail.extension}""")
 
         holder.cvItem.setOnClickListener {
             listener.onItemClick(items[position].id)
         }
+
+        if (position + 1 == items.size)
+            listener.onLoadCharacters()
     }
 
-    interface OnItemClickListener {
+    interface OnListener {
         fun onItemClick(characterId: Int)
+        fun onLoadCharacters()
     }
 
+
+    fun addAll(mItems: List<Result>) {
+        items.addAll(mItems)
+        notifyDataSetChanged()
+    }
 }
 
 class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

@@ -20,7 +20,10 @@ class APIClient {
 
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
-            val client = OkHttpClient.Builder().addInterceptor(TokenInterceptor()).build()
+            val client = OkHttpClient.Builder()
+                .addInterceptor(TokenInterceptor())
+                .addInterceptor(interceptor)
+                .build()
 
             return Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -35,7 +38,7 @@ class APIClient {
         }
     }
 
-    class TokenInterceptor() : Interceptor {
+    class TokenInterceptor : Interceptor {
         override fun intercept(chain: Interceptor.Chain): Response {
             val ts = System.currentTimeMillis().toString()
             var original = chain.request()
