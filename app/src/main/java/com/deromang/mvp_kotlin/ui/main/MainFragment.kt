@@ -85,7 +85,7 @@ class MainFragment : BaseFragment(), MainFragmentView {
                 }
 
                 override fun onLoadCharacters() {
-                    if (offset + limit < quantity)
+                    if (offset < quantity)
                         presenter.showCharacters(limit, offset)
                 }
 
